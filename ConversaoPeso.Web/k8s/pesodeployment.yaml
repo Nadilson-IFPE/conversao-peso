@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conversao-peso
+spec:
+  selector:
+    matchLabels:
+      app: conversao-peso
+  template:
+    metadata:
+      labels:
+        app: conversao-peso
+    spec:
+      containers:
+        - name: conversao-peso
+          image: nadilson/conversao-peso:v1
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-conversao-peso
+spec:
+  selector:
+    app: conversao-peso
+  ports:
+    - port: 80
+      nodePort: 8080
+      protocol: TCP
+  type: NodePort
